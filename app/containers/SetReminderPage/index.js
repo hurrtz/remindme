@@ -25,7 +25,7 @@ export default function SetReminderPage() {
         <Form.Field>
           <Input placeholder="Notice Period" fluid />
         </Form.Field>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">next</Button>
       </Form>
     </Container>
   );
