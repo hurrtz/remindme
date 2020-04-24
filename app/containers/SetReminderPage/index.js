@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Header, Container, Input, Button, Form } from 'semantic-ui-react';
 import messages from './messages';
 
-export default function FirstPage() {
+export default function SetReminderPage() {
   return (
     <Container>
       <Header as="h1">

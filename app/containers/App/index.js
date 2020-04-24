@@ -2,8 +2,8 @@ import React from 'react';
 import { Switch, Route, Link, useLocation } from 'react-router-dom';
 import { Container, Menu } from 'semantic-ui-react';
 
-import FirstPage from 'containers/FirstPage/Loadable';
-import SecondPage from 'containers/SecondPage/Loadable';
+import SetReminderPage from 'containers/SetReminderPage/Loadable';
+import SummaryPage from 'containers/SummaryPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import PageMenu from 'components/PageMenu';
@@ -24,8 +24,8 @@ export default () => {
     <Container>
       <PageMenu items={makeMenuItems(location.pathname)} />
       <Switch>
-        <Route exact path="/" component={FirstPage} />
-        <Route exact path="/summary" component={SecondPage} />
+        <Route exact path="/" component={SetReminderPage} />
+        <Route exact path="/summary" component={SummaryPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </Container>

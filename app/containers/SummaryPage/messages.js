@@ -1,10 +1,10 @@
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.containers.FirstPage';
+export const scope = 'app.containers.SummaryPage';
 
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: 'Set a reminder!',
+    defaultMessage: 'This is the second page!',
   },
 });
