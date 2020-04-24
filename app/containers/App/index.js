@@ -10,7 +10,7 @@ import PageMenu from 'components/PageMenu';
 
 const makeMenuItems = pathname => [
   <Menu.Item key="submit" link active={pathname === '/'}>
-    <Link to="/">Submit your data!</Link>
+    <Link to="/">Set a reminder!</Link>
   </Menu.Item>,
   <Menu.Item key="summary" link active={pathname === '/summary'}>
     <Link to="summary">Summary</Link>
