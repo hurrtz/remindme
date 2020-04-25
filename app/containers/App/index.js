@@ -8,13 +8,17 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import PageMenu from 'components/PageMenu';
 
+import { PATH_ROOT, PATH_SUMMARY } from './constants';
+
+const makeMenuItem = (pathname, path, title) => [
+  <Menu.Item key={path} link active={pathname === path}>
+    <Link to={path}>{title}</Link>
+  </Menu.Item>,
+];
+
 const makeMenuItems = pathname => [
-  <Menu.Item key="submit" link active={pathname === '/'}>
-    <Link to="/">Set a reminder!</Link>
-  </Menu.Item>,
-  <Menu.Item key="summary" link active={pathname === '/summary'}>
-    <Link to="summary">Summary</Link>
-  </Menu.Item>,
+  makeMenuItem(pathname, PATH_ROOT, 'Set a reminder!'),
+  makeMenuItem(pathname, PATH_SUMMARY, 'Summary'),
 ];
 
 export default () => {
@@ -24,8 +28,8 @@ export default () => {
     <Container>
       <PageMenu items={makeMenuItems(location.pathname)} />
       <Switch>
-        <Route exact path="/" component={SetReminderPage} />
-        <Route exact path="/summary" component={SummaryPage} />
+        <Route exact path={PATH_ROOT} component={SetReminderPage} />
+        <Route exact path={PATH_SUMMARY} component={SummaryPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </Container>

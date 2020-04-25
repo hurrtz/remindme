@@ -34,11 +34,9 @@ const mapStateToProps = createStructuredSelector({
   category: makeSelectCategory(),
 });
 
-export function mapDispatchToProps(dispatch) {
-  return {
-    onChange: category => dispatch(setCategory(category)),
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  onChange: category => dispatch(setCategory(category)),
+});
 
 const withConnect = connect(
   mapStateToProps,
