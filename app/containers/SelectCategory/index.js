@@ -1,23 +1,29 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
+import { debounce } from 'lodash';
 
 import { makeSelectCategory } from 'containers/SetReminderPage/selectors';
 import { setCategory } from 'containers/SetReminderPage/actions';
 
-const SelectCategory = ({ category, onChange }) => (
-  <Form.Field required>
-    <Form.Input
-      placeholder="Category"
-      fluid
-      value={category}
-      onChange={onChange}
-    />
-  </Form.Field>
-);
+const SelectCategory = ({ category, onChange: _onChange }) => {
+  const onChange = useCallback(debounce(_onChange, 250), []);
+  const handleChange = event => onChange(event.target.value);
+
+  return (
+    <Form.Field required>
+      <Form.Input
+        placeholder="Category"
+        fluid
+        value={category}
+        onChange={handleChange}
+      />
+    </Form.Field>
+  );
+};
 
 SelectCategory.propTypes = {
   category: PropTypes.string.isRequired,
@@ -30,7 +36,7 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChange: category => dispatch(setCategory(category.target.value)),
+    onChange: category => dispatch(setCategory(category)),
   };
 }
 

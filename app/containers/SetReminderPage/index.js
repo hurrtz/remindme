@@ -1,10 +1,11 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Header, Container, Button, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
+import { debounce } from 'lodash';
 
 import { useInjectReducer } from 'utils/injectReducer';
 
@@ -26,11 +27,28 @@ const SetReminderPage = ({
   title,
   contractEndDate,
   noticePeriod,
-  onChangeTitle,
-  onChangeContractEndDate,
-  onChangeNoticePeriod,
+  onChangeTitle: _onChangeTitle,
+  onChangeContractEndDate: _onChangeContractEndDate,
+  onChangeNoticePeriod: _onChangeNoticePeriod,
 }) => {
   useInjectReducer({ key, reducer });
+
+  const onChangeTitle = useCallback(debounce(_onChangeTitle, 250), []);
+  const handleChangeTitle = event => onChangeTitle(event.target.value);
+
+  const onChangeContractEndDate = useCallback(
+    debounce(_onChangeContractEndDate, 250),
+    [],
+  );
+  const handleChangeContractEndDate = event =>
+    onChangeContractEndDate(event.target.value);
+
+  const onChangeNoticePeriod = useCallback(
+    debounce(_onChangeNoticePeriod, 250),
+    [],
+  );
+  const handleChangeNoticePeriod = event =>
+    onChangeNoticePeriod(event.target.value);
 
   return (
     <Container>
@@ -43,7 +61,7 @@ const SetReminderPage = ({
             placeholder="Title"
             fluid
             value={title}
-            onChange={onChangeTitle}
+            onChange={handleChangeTitle}
           />
         </Form.Field>
         <SelectCategory />
@@ -53,7 +71,7 @@ const SetReminderPage = ({
             placeholder="Contract End Date"
             fluid
             value={contractEndDate}
-            onChange={onChangeContractEndDate}
+            onChange={handleChangeContractEndDate}
           />
         </Form.Field>
         <Form.Field>
@@ -61,7 +79,7 @@ const SetReminderPage = ({
             placeholder="Notice Period"
             fluid
             value={noticePeriod}
-            onChange={onChangeNoticePeriod}
+            onChange={handleChangeNoticePeriod}
           />
         </Form.Field>
         <Button type="submit" content="next" />
@@ -87,11 +105,11 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangeTitle: title => dispatch(setTitle(title.target.value)),
+    onChangeTitle: title => dispatch(setTitle(title)),
     onChangeContractEndDate: contractEndDate =>
-      dispatch(setContractEndDate(contractEndDate.target.value)),
+      dispatch(setContractEndDate(contractEndDate)),
     onChangeNoticePeriod: noticePeriod =>
-      dispatch(setNoticePeriod(noticePeriod.target.value)),
+      dispatch(setNoticePeriod(noticePeriod)),
   };
 }
 
