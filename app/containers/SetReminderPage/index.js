@@ -11,6 +11,7 @@ import { Redirect } from 'react-router-dom';
 import { useInjectReducer } from 'utils/injectReducer';
 
 import SelectCategory from 'containers/SelectCategory';
+import { makeSelectCategory } from 'containers/SelectCategory/selectors';
 import SelectProviders from 'containers/SelectProvider';
 
 import { PATH_SUMMARY } from 'containers/App/constants';
@@ -19,7 +20,6 @@ import messages from './messages';
 import reducer from './reducer';
 import {
   makeSelectTitle,
-  makeSelectCategory,
   makeSelectProvider,
   makeSelectContractEndDate,
   makeSelectNoticePeriod,
@@ -103,7 +103,7 @@ const SetReminderPage = ({
             onChange={handleChangeNoticePeriod}
           />
         </Form.Field>
-        <Button type="submit" content="next" disabled={!isFormValid()} />
+        <Button type="submit" content="next" />
       </Form>
     </Container>
   );

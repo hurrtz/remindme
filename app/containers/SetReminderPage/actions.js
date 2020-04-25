@@ -1,6 +1,5 @@
 import {
   SET_TITLE,
-  SET_CATEGORY,
   SET_PROVIDER,
   SET_CONTRACT_END_DATE,
   SET_NOTICE_PERIOD,
@@ -8,11 +7,6 @@ import {
 
 export const setTitle = title => ({
   type: SET_TITLE,
-  payload: title,
-});
-
-export const setCategory = title => ({
-  type: SET_CATEGORY,
   payload: title,
 });
 

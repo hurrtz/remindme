@@ -1,24 +1,39 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
-import { debounce } from 'lodash';
 
-import { makeSelectCategory } from 'containers/SetReminderPage/selectors';
-import { setCategory } from 'containers/SetReminderPage/actions';
+import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from 'utils/injectSaga';
 
-const SelectCategory = ({ category, onChange: _onChange }) => {
-  const onChange = useCallback(debounce(_onChange, 250), []);
-  const handleChange = event => onChange(event.target.value);
+import { setCategory, fetchCategories } from './actions';
+import reducer from './reducer';
+import saga from './saga';
+import { makeSelectCategories, makeSelectCategory } from './selectors';
+
+const key = 'SelectCategories';
+
+const SelectCategory = ({ categories, category, onChange, handleFetch }) => {
+  const handleChange = (_, { value }) => {
+    onChange(value);
+  };
+
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
+  useEffect(() => {
+    handleFetch();
+  }, []);
 
   return (
     <Form.Field required>
-      <Form.Input
+      <Form.Select
+        selection
         placeholder="Category"
-        fluid
         value={category}
+        options={categories}
         onChange={handleChange}
       />
     </Form.Field>
@@ -26,16 +41,32 @@ const SelectCategory = ({ category, onChange: _onChange }) => {
 };
 
 SelectCategory.propTypes = {
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      created: PropTypes.string,
+      lastModified: PropTypes.string,
+      categoryType: PropTypes.string,
+      categoryName: PropTypes.string,
+      slug: PropTypes.string,
+      icon: PropTypes.string,
+      sortPriority: PropTypes.number,
+      description: PropTypes.string,
+    }),
+  ),
   category: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  handleFetch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   category: makeSelectCategory(),
+  categories: makeSelectCategories(),
 });
 
 const mapDispatchToProps = dispatch => ({
   onChange: category => dispatch(setCategory(category)),
+  handleFetch: () => dispatch(fetchCategories()),
 });
 
 const withConnect = connect(
