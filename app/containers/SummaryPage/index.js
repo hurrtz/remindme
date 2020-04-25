@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
-import { Container, Card } from 'semantic-ui-react';
+import { Container, Card, Header } from 'semantic-ui-react';
 
 import {
   makeSelectTitle,
@@ -24,9 +24,9 @@ const SummaryPage = ({
   noticePeriod,
 }) => (
   <Container>
-    <h1>
+    <Header as="h1">
       <FormattedMessage {...messages.header} />
-    </h1>
+    </Header>
     <Container>
       <Card fluid header="Title" description={title} />
       <Card fluid header="Category" description={category} />
