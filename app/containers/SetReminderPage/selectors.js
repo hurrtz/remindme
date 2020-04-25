@@ -24,7 +24,7 @@ const makeSelectNoticePeriod = () =>
 const makeSelectFormIsValid = () =>
   createSelector(
     selectSetReminderForm,
-    setReminderFormState => setReminderFormState.formIsValid || '',
+    setReminderFormState => setReminderFormState.formIsValid,
   );
 
 export {

@@ -41,13 +41,10 @@ const SummaryPage = ({
 
 SummaryPage.propTypes = {
   title: PropTypes.string.isRequired,
-  onChangeTitle: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
   provider: PropTypes.string.isRequired,
   contractEndDate: PropTypes.string.isRequired,
-  onChangeContractEndDate: PropTypes.func.isRequired,
   noticePeriod: PropTypes.string.isRequired,
-  onChangeNoticePeriod: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
