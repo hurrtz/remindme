@@ -89,7 +89,7 @@ const SetReminderPage = ({
           <Form.Input
             placeholder="Title"
             fluid
-            value={title}
+            defaultValue={title}
             onChange={handleChangeTitle}
           />
         </Form.Field>
@@ -99,7 +99,7 @@ const SetReminderPage = ({
           <Form.Input
             placeholder="Contract End Date"
             fluid
-            value={contractEndDate}
+            defaultValue={contractEndDate}
             onChange={handleChangeContractEndDate}
           />
         </Form.Field>
@@ -107,7 +107,7 @@ const SetReminderPage = ({
           <Form.Input
             placeholder="Notice Period"
             fluid
-            value={noticePeriod}
+            defaultValue={noticePeriod}
             onChange={handleChangeNoticePeriod}
           />
         </Form.Field>
