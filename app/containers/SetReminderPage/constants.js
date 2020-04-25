@@ -1,4 +1,3 @@
 export const SET_TITLE = 'SET_TITLE';
-export const SET_PROVIDER = 'SET_PROVIDER';
 export const SET_CONTRACT_END_DATE = 'SET_CONTRACT_END_DATE';
 export const SET_NOTICE_PERIOD = 'SET_NOTICE_PERIOD';

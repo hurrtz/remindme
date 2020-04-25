@@ -13,6 +13,7 @@ import { useInjectReducer } from 'utils/injectReducer';
 import SelectCategory from 'containers/SelectCategory';
 import { makeSelectCategory } from 'containers/SelectCategory/selectors';
 import SelectProviders from 'containers/SelectProvider';
+import { makeSelectProvider } from 'containers/SelectProvider/selectors';
 
 import { PATH_SUMMARY } from 'containers/App/constants';
 
@@ -20,7 +21,6 @@ import messages from './messages';
 import reducer from './reducer';
 import {
   makeSelectTitle,
-  makeSelectProvider,
   makeSelectContractEndDate,
   makeSelectNoticePeriod,
 } from './selectors';

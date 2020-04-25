@@ -1,41 +1,84 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
-import { debounce } from 'lodash';
 
-import { makeSelectProvider } from 'containers/SetReminderPage/selectors';
-import { setProvider } from 'containers/SetReminderPage/actions';
+import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from 'utils/injectSaga';
+import { makeSelectCategory } from 'containers/SelectCategory/selectors';
+import { CategoryProps } from 'containers/SelectCategory/constants';
 
-const SelectProvider = ({ provider, onChange: _onChange }) => {
-  const onChange = useCallback(debounce(_onChange, 250), []);
-  const handleChange = event => onChange(event.target.value);
+import { setProvider, fetchProviders } from './actions';
+import reducer from './reducer';
+import saga from './saga';
+import { makeSelectProviders, makeSelectProvider } from './selectors';
+import { CompanyProps } from './constants';
+
+const key = 'SelectProviders';
+
+const SelectProvider = ({
+  providers,
+  provider,
+  category,
+  onChange,
+  handleFetch,
+}) => {
+  const handleChange = (_, { value }) => {
+    onChange(value);
+  };
+
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
+  useEffect(() => {
+    handleFetch();
+  }, [category]);
 
   return (
     <Form.Field required>
-      <Form.Input
+      <Form.Select
+        selection
         placeholder="Provider"
-        fluid
         value={provider}
+        options={providers}
         onChange={handleChange}
+        disabled={!providers || !providers.length}
       />
     </Form.Field>
   );
 };
 
 SelectProvider.propTypes = {
+  providers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      created: PropTypes.string,
+      lastModified: PropTypes.string,
+      category: CategoryProps,
+      company: CompanyProps,
+      defaultNoticePeriod: PropTypes.string,
+      active: PropTypes.bool,
+      sortPriority: PropTypes.number,
+      disabled: PropTypes.bool,
+    }),
+  ),
+  category: PropTypes.string.isRequired,
   provider: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  handleFetch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   provider: makeSelectProvider(),
+  providers: makeSelectProviders(),
+  category: makeSelectCategory(),
 });
 
 const mapDispatchToProps = dispatch => ({
-  onChange: provider => dispatch(setProvider(provider)),
+  onChange: category => dispatch(setProvider(category)),
+  handleFetch: () => dispatch(fetchProviders()),
 });
 
 const withConnect = connect(

@@ -12,6 +12,7 @@ import { setCategory, fetchCategories } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectCategories, makeSelectCategory } from './selectors';
+import { CategoryProps } from './constants';
 
 const key = 'SelectCategories';
 
@@ -41,19 +42,7 @@ const SelectCategory = ({ categories, category, onChange, handleFetch }) => {
 };
 
 SelectCategory.propTypes = {
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      created: PropTypes.string,
-      lastModified: PropTypes.string,
-      categoryType: PropTypes.string,
-      categoryName: PropTypes.string,
-      slug: PropTypes.string,
-      icon: PropTypes.string,
-      sortPriority: PropTypes.number,
-      description: PropTypes.string,
-    }),
-  ),
+  categories: PropTypes.arrayOf(CategoryProps),
   category: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   handleFetch: PropTypes.func.isRequired,

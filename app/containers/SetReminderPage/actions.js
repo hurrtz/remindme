@@ -1,6 +1,5 @@
 import {
   SET_TITLE,
-  SET_PROVIDER,
   SET_CONTRACT_END_DATE,
   SET_NOTICE_PERIOD,
 } from './constants';
@@ -8,11 +7,6 @@ import {
 export const setTitle = title => ({
   type: SET_TITLE,
   payload: title,
-});
-
-export const setProvider = provider => ({
-  type: SET_PROVIDER,
-  payload: provider,
 });
 
 export const setContractEndDate = contractEndDate => ({

@@ -8,11 +8,11 @@ import { Container, Card, Header } from 'semantic-ui-react';
 
 import {
   makeSelectTitle,
-  makeSelectProvider,
   makeSelectContractEndDate,
   makeSelectNoticePeriod,
 } from 'containers/SetReminderPage/selectors';
 import { makeSelectCategoriesName as makeSelectCategory } from 'containers/SelectCategory/selectors';
+import { makeSelectProviderName as makeSelectProvider } from 'containers/SelectProvider/selectors';
 
 import messages from './messages';
 

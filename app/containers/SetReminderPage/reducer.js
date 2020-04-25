@@ -1,14 +1,12 @@
 import produce from 'immer';
 import {
   SET_TITLE,
-  SET_PROVIDER,
   SET_CONTRACT_END_DATE,
   SET_NOTICE_PERIOD,
 } from './constants';
 
 export const initialState = {
   title: undefined,
-  provider: undefined,
   contractEndDate: undefined,
   noticePeriod: undefined,
 };
@@ -19,10 +17,6 @@ const setReminderPageReducer = (state = initialState, action) =>
     switch (action.type) {
       case SET_TITLE:
         draft.title = action.payload;
-        break;
-
-      case SET_PROVIDER:
-        draft.provider = action.payload;
         break;
 
       case SET_CONTRACT_END_DATE:

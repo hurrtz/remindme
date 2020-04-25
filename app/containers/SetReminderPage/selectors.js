@@ -9,12 +9,6 @@ const makeSelectTitle = () =>
     setReminderFormState => setReminderFormState.title || '',
   );
 
-const makeSelectProvider = () =>
-  createSelector(
-    selectSetReminderForm,
-    setReminderFormState => setReminderFormState.provider || '',
-  );
-
 const makeSelectContractEndDate = () =>
   createSelector(
     selectSetReminderForm,
@@ -27,9 +21,4 @@ const makeSelectNoticePeriod = () =>
     setReminderFormState => setReminderFormState.noticePeriod || '',
   );
 
-export {
-  makeSelectTitle,
-  makeSelectProvider,
-  makeSelectContractEndDate,
-  makeSelectNoticePeriod,
-};
+export { makeSelectTitle, makeSelectContractEndDate, makeSelectNoticePeriod };
