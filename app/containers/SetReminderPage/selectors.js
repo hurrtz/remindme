@@ -21,4 +21,15 @@ const makeSelectNoticePeriod = () =>
     setReminderFormState => setReminderFormState.noticePeriod || '',
   );
 
-export { makeSelectTitle, makeSelectContractEndDate, makeSelectNoticePeriod };
+const makeSelectFormIsValid = () =>
+  createSelector(
+    selectSetReminderForm,
+    setReminderFormState => setReminderFormState.formIsValid || '',
+  );
+
+export {
+  makeSelectTitle,
+  makeSelectContractEndDate,
+  makeSelectNoticePeriod,
+  makeSelectFormIsValid,
+};

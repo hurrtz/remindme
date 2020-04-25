@@ -23,8 +23,14 @@ import {
   makeSelectTitle,
   makeSelectContractEndDate,
   makeSelectNoticePeriod,
+  makeSelectFormIsValid,
 } from './selectors';
-import { setTitle, setNoticePeriod, setContractEndDate } from './actions';
+import {
+  setTitle,
+  setNoticePeriod,
+  setContractEndDate,
+  setFormIsValid,
+} from './actions';
 
 const key = 'SetReminderForm';
 
@@ -37,10 +43,11 @@ const SetReminderPage = ({
   onChangeTitle: _onChangeTitle,
   onChangeContractEndDate: _onChangeContractEndDate,
   onChangeNoticePeriod: _onChangeNoticePeriod,
+  onSetFormIsValid,
 }) => {
-  const [showSummary, setShowSummary] = useState(false);
-
   useInjectReducer({ key, reducer });
+
+  const [goToNextPage, setGoToNextPage] = useState(false);
 
   const onChangeTitle = useCallback(debounce(_onChangeTitle, 250), []);
   const handleChangeTitle = event => onChangeTitle(event.target.value);
@@ -63,11 +70,12 @@ const SetReminderPage = ({
 
   const onSubmit = () => {
     if (isFormValid()) {
-      setShowSummary(true);
+      setGoToNextPage(true);
+      onSetFormIsValid(true);
     }
   };
 
-  if (showSummary) {
+  if (goToNextPage) {
     return <Redirect to={PATH_SUMMARY} />;
   }
 
@@ -103,7 +111,7 @@ const SetReminderPage = ({
             onChange={handleChangeNoticePeriod}
           />
         </Form.Field>
-        <Button type="submit" content="next" />
+        <Button type="submit" content="next" disabled={!isFormValid()} />
       </Form>
     </Container>
   );
@@ -118,6 +126,8 @@ SetReminderPage.propTypes = {
   onChangeContractEndDate: PropTypes.func.isRequired,
   noticePeriod: PropTypes.string.isRequired,
   onChangeNoticePeriod: PropTypes.func.isRequired,
+  formIsValid: PropTypes.bool.isRequired,
+  onSetFormIsValid: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -126,6 +136,7 @@ const mapStateToProps = createStructuredSelector({
   provider: makeSelectProvider(),
   contractEndDate: makeSelectContractEndDate(),
   noticePeriod: makeSelectNoticePeriod(),
+  formIsValid: makeSelectFormIsValid(),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -133,6 +144,7 @@ const mapDispatchToProps = dispatch => ({
   onChangeContractEndDate: contractEndDate =>
     dispatch(setContractEndDate(contractEndDate)),
   onChangeNoticePeriod: noticePeriod => dispatch(setNoticePeriod(noticePeriod)),
+  onSetFormIsValid: formIsValid => dispatch(setFormIsValid(formIsValid)),
 });
 
 const withConnect = connect(

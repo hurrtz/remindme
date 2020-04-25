@@ -2,6 +2,7 @@ import {
   SET_TITLE,
   SET_CONTRACT_END_DATE,
   SET_NOTICE_PERIOD,
+  SET_FORM_IS_VALID,
 } from './constants';
 
 export const setTitle = title => ({
@@ -17,4 +18,9 @@ export const setContractEndDate = contractEndDate => ({
 export const setNoticePeriod = noticePeriod => ({
   type: SET_NOTICE_PERIOD,
   payload: noticePeriod,
+});
+
+export const setFormIsValid = formIsValid => ({
+  type: SET_FORM_IS_VALID,
+  payload: formIsValid,
 });

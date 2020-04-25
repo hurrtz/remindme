@@ -1,3 +1,4 @@
 export const SET_TITLE = 'SET_TITLE';
 export const SET_CONTRACT_END_DATE = 'SET_CONTRACT_END_DATE';
 export const SET_NOTICE_PERIOD = 'SET_NOTICE_PERIOD';
+export const SET_FORM_IS_VALID = 'SET_FORM_IS_VALID';

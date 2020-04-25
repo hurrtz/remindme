@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Switch, Route, Link, useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import PropTypes from 'prop-types';
 import { Container, Menu } from 'semantic-ui-react';
+
+import { makeSelectFormIsValid } from 'containers/SetReminderPage/selectors';
 
 import SetReminderPage from 'containers/SetReminderPage/Loadable';
 import SummaryPage from 'containers/SummaryPage/Loadable';
@@ -10,23 +16,29 @@ import PageMenu from 'components/PageMenu';
 
 import { PATH_ROOT, PATH_SUMMARY } from './constants';
 
-const makeMenuItem = (pathname, path, title) => [
-  <Menu.Item key={path} link active={pathname === path}>
-    <Link to={path}>{title}</Link>
+const makeMenuItems = (pathname, formIsValid) => [
+  <Menu.Item key={PATH_ROOT} link active={pathname === PATH_ROOT}>
+    <Link to={PATH_ROOT}>Set a reminder!</Link>
+  </Menu.Item>,
+  <Menu.Item
+    key={PATH_SUMMARY}
+    link={formIsValid}
+    active={pathname === PATH_SUMMARY}
+  >
+    {formIsValid ? (
+      <Link to={PATH_SUMMARY}>Summary</Link>
+    ) : (
+      <span>Summary</span>
+    )}
   </Menu.Item>,
 ];
 
-const makeMenuItems = pathname => [
-  makeMenuItem(pathname, PATH_ROOT, 'Set a reminder!'),
-  makeMenuItem(pathname, PATH_SUMMARY, 'Summary'),
-];
-
-export default () => {
+const App = ({ formIsValid }) => {
   const location = useLocation();
 
   return (
     <Container>
-      <PageMenu items={makeMenuItems(location.pathname)} />
+      <PageMenu items={makeMenuItems(location.pathname, formIsValid)} />
       <Switch>
         <Route exact path={PATH_ROOT} component={SetReminderPage} />
         <Route exact path={PATH_SUMMARY} component={SummaryPage} />
@@ -35,3 +47,18 @@ export default () => {
     </Container>
   );
 };
+
+App.propTypes = {
+  formIsValid: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  formIsValid: makeSelectFormIsValid(),
+});
+
+const withConnect = connect(mapStateToProps);
+
+export default compose(
+  withConnect,
+  memo,
+)(App);
